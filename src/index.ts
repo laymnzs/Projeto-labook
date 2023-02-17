@@ -21,7 +21,7 @@ app.listen(3003, () => {
 
 
 
-//ENDPOINT SIGNUP: (criar novo usuario) -- OK
+//ENDPOINT SIGNUP: (criar novo usuario) -- OK!
 
 
 const userController = new UserController()
