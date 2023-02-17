@@ -1,8 +1,8 @@
 import { users, posts, likes_dislikes} from "./database/TTabelas";
 import cors from 'cors'
-import {BaseDatabase} from './database/BaseDataBase'
+//import {BaseDatabase} from './database/BaseDataBase'
 import express, { Request, Response } from 'express'
-import { TUsers, TPosts, TLikes_dislikes } from "./types";
+//import { TUsers, TPosts, TLikes_dislikes } from "./types";
 import { UserController } from "./controller/UserController";
 
 //INVOCAR A FUNÇÃO EXPRESS() DENTRO DA VARIAVEL APP
