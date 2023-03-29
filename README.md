@@ -1,174 +1,98 @@
-# Projeto Labook
+#### Projeto Labook
+
 O Labook é uma rede social com o objetivo de promover a conexão e interação entre pessoas. Quem se cadastrar no aplicativo poderá criar e curtir publicações.
 
-Agora que temos as bases de criação de APIs e banco de dados, o próximo nível é a implementação de segurança e códigos mais escaláveis. Veremos durante o prazo de entrega desse projeto inúmeros conceitos e formas de desenvolvimento seguindo padrões de design e arquitetura, e seu desafio será unir as funcionalidades com as boas práticas de código..
-
-
-# Conteúdos abordados
-- NodeJS
-- Typescript
-- Express
-- SQL e SQLite
-- Knex
-- POO
-- Arquitetura em camadas
-- Geração de UUID
-- Geração de hashes
-- Autenticação e autorização
-- Roteamento
-- Postman
 
 # Banco de dados
+
 ![projeto-labook (2)](https://user-images.githubusercontent.com/29845719/216036534-2b3dfb48-7782-411a-bffd-36245b78594e.png)
 
 https://dbdiagram.io/d/63d16443296d97641d7c1ae1
 
-# Lista de requisitos
-- Endpoints
-    - [ ]  signup
-    - [ ]  login
-    - [ ]  get posts
-    - [ ]  create post
-    - [ ]  edit post
-    - [ ]  delete post
-    - [ ]  like / dislike post
 
-- Autenticação e autorização
-    - [ ]  identificação UUID
-    - [ ]  senhas hasheadas com Bcrypt
-    - [ ]  tokens JWT
- 
- - Código
-    - [ ]  POO
-    - [ ]  Arquitetura em camadas
-    - [ ]  Roteadores no Express
+
+### Como testar
+
+1. Para acessar a documentação, [aqui!](https://documenter.getpostman.com/view/24461561/2s93RRwDcg)!
+
+2. Clone o repositório
+   ```sh
+   git clone https://github.com/laymnzs/projeto-labook
+   ```
+3. Instale as dependências
+   ```sh
+   npm install
+   ```
+4. Faça a Conexão com o Banco de Dados
+  
+5. Crie e popule as Tabelas
+* Users;
+* Posts;
+* Likes_Dislikes.
+
+6. Rode o comando
+   ```sh
+   npm run dev
+   ```
+7. Execute na porta 3003 com o Endpoint
+   ```sh
+   http://localhost:3003/
+   ```
+
+
+### Tecnologias utilizadas:
+
+![NodeJs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
+
+
+
+### Programas utilizados:
+- VSCode
+- Postman 
+
+
+
 
 # Exemplos de requisição
 
-## Signup
-Endpoint público utilizado para cadastro. Devolve um token jwt.
-```typescript
-// request POST /users/signup
-// body JSON
-{
-  "name": "Beltrana",
-  "email": "beltrana@email.com",
-  "password": "beltrana00"
-}
+1. Signup
+Endpoint público utilizado para cadastro. Devolve um token jwt, com status 201 CREATED;
 
-// response
-// status 201 CREATED
-{
-  token: "um token jwt"
-}
-```
+2. Login
+Endpoint público utilizado para login. Devolve um token jwt, com status 200 CREATED;
 
-## Login
-Endpoint público utilizado para login. Devolve um token jwt.
-```typescript
-// request POST /users/login
-// body JSON
-{
-  "email": "beltrana@email.com",
-  "password": "beltrana00"
-}
+3. Get Posts
+Endpoint protegido, requer um token jwt para acessá-lo, devolve status 200 CREATED;
 
-// response
-// status 200 OK
-{
-  token: "um token jwt"
-}
-```
+4. Create post
+Endpoint protegido, requer um token jwt para acessá-lo, devolve status 201 CREATED;
 
-## Get posts
+5. Edit post
 Endpoint protegido, requer um token jwt para acessá-lo.
-```typescript
-// request GET /posts
-// headers.authorization = "token jwt"
+Só quem criou o post pode editá-lo e somente o conteúdo pode ser editado, devolve status 200 CREATED;
 
-// response
-// status 200 OK
-[
-    {
-        "id": "uma uuid v4",
-        "content": "Hoje vou estudar POO!",
-        "likes": 2,
-        "dislikes" 1,
-        "createdAt": "2023-01-20T12:11:47:000Z"
-        "updatedAt": "2023-01-20T12:11:47:000Z"
-        "creator": {
-            "id": "uma uuid v4",
-            "name": "Fulano"
-        }
-    },
-    {
-        "id": "uma uuid v4",
-        "content": "kkkkkkkkkrying",
-        "likes": 0,
-        "dislikes" 0,
-        "createdAt": "2023-01-20T15:41:12:000Z"
-        "updatedAt": "2023-01-20T15:49:55:000Z"
-        "creator": {
-            "id": "uma uuid v4",
-            "name": "Ciclana"
-        }
-    }
-]
-```
-
-## Create post
+6. Delete post
 Endpoint protegido, requer um token jwt para acessá-lo.
-```typescript
-// request POST /posts
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "content": "Partiu happy hour!"
-}
+Só quem criou o post pode deletá-lo. Admins podem deletar o post de qualquer pessoa, devolve status 200 CREATED;
 
-// response
-// status 201 CREATED
-```
+7. Like or dislike post (mesmo endpoint faz as duas coisas)
 
-## Edit post
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Só quem criou o post pode editá-lo e somente o conteúdo pode ser editado.
-```typescript
-// request PUT /posts/:id
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "content": "Partiu happy hour lá no point de sempre!"
-}
-
-// response
-// status 200 OK
-```
-
-## Delete post
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Só quem criou o post pode deletá-lo. Admins podem deletar o post de qualquer pessoa.
-
-```typescript
-// request DELETE /posts/:id
-// headers.authorization = "token jwt"
-
-// response
-// status 200 OK
-```
-
-## Like or dislike post (mesmo endpoint faz as duas coisas)
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Quem criou o post não pode dar like ou dislike no mesmo.<br><br>
-Caso dê um like em um post que já tenha dado like, o like é desfeito.<br>
-Caso dê um dislike em um post que já tenha dado dislike, o dislike é desfeito.<br><br>
-Caso dê um like em um post que tenha dado dislike, o like sobrescreve o dislike.<br>
+Endpoint protegido, requer um token jwt para acessá-lo.
+Quem criou o post não pode dar like ou dislike no mesmo.
+Caso dê um like em um post que já tenha dado like, o like é desfeito.
+Caso dê um dislike em um post que já tenha dado dislike, o dislike é desfeito.
+Caso dê um like em um post que tenha dado dislike, o like sobrescreve o dislike.
 Caso dê um dislike em um post que tenha dado like, o dislike sobrescreve o like.
+
 ### Like (funcionalidade 1)
+
 ```typescript
-// request PUT /posts/:id/like
-// headers.authorization = "token jwt"
-// body JSON
+request PUT /posts/:id/like
+headers.authorization = "token jwt"
+body JSON
 {
     "like": true
 }
@@ -177,15 +101,17 @@ Caso dê um dislike em um post que tenha dado like, o dislike sobrescreve o like
 // status 200 OK
 ```
 
+
 ### Dislike (funcionalidade 2)
+
 ```typescript
-// request PUT /posts/:id/like
-// headers.authorization = "token jwt"
-// body JSON
+request PUT /posts/:id/like
+headers.authorization = "token jwt"
+body JSON
 {
     "like": false
 }
 
-// response
-// status 200 OK
+response
+status 200 OK
 ```

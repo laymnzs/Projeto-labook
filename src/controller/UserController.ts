@@ -1,87 +1,63 @@
-import { Request, Response } from 'express'
-import { UserBusiness } from '../business/UserBusiness'
-import { UsersDataBase } from '../database/usersDataBase'
+import { UserBusiness } from "../business/UserBusiness"
+import { LoginInputDTO, SignupInputDTO } from "../dtos/userDTO"
+import { BaseError } from "../erros/BaseError"
+import { Request, Response } from "express"
 
 
 export class UserController {
-  
-    public getUsers = async (req: Request, res: Response) => {
-  
-    
-        
-try{
+    constructor(
+        private userBusiness: UserBusiness
+    ) {}
 
-    
-        const name = req.body.name
-        const email = req.body.email
-        const password = req.body.password
-        
-        /*if (typeof name !== "string") {
-            res.status(400)
-            throw new Error("'Nome' inválido, deve ser string")
-        }
+    public signup = async (req: Request, res: Response) => {
+        try { //receber os dados de ENTRADA -- Modelando o INPUT
+              //unknown: vindo do body
+            const input: SignupInputDTO = {
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password
+            }
 
-        if (name.length < 1) {
-            res.status(400)
-            throw new Error("'id' e 'name' devem possuir no mínimo 1 caractere")
-        }
+            //envia o input
+            const output = await this.userBusiness.signup(input)
 
-        if (typeof email !== "string") {
-            res.status(400)
-            throw new Error("'Email' inválido, deve ser string")
-        }
+            res.status(201).send(output) //resposta que vem da camada: userBusiness.signup(input)
 
-        if (typeof password !== "string") {
-            res.status(400)
-            throw new Error("'Password' inválido, deve ser string")
-        }
+        } catch (error) {
+            console.log(error)
 
-       
-
-
-
-        const newUsers ={
-            name: name,
-            email: email,
-            password: password,
-        }
-        
-        
-        //MÉTODO: arquitetura
-        await db.insert({
-            name: name,
-            email: email,
-            password: password,
-
-          }).into("users")
-
-        res.status(200).send(newUsers)*/
-
-        //const usersDataBase = new UsersDataBase()
-        //const usersdb = usersDataBase.postUsers(name, email, password)
-
-
-        const userBusiness = new UserBusiness()
-
-        const exit = await userBusiness.publicPost(name, email, password)
-
-
-        res.status(201).send(`CREATED ${exit}`)
-
-
-    } catch (error) {
-        console.log(error)
-
-        if (req.statusCode === 200) {
-            res.status(500)
-        }
-
-        if (error instanceof Error) {
-            res.send(error.message)
-        } else {
-            res.send("Erro inesperado")
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Error inesperado")
+            }
         }
     }
 
+
+
+
+    public login = async (req: Request, res: Response) => {
+        try { //receber os dados de ENTRADA -- Modelando o INPUT
+              //unknown: vindo do body
+            const input: LoginInputDTO = {
+                email: req.body.email,
+                password: req.body.password
+            }
+
+            //envia o input
+            const output = await this.userBusiness.login(input)
+
+            res.status(200).send(output) //requisição pede status 200
+
+        } catch (error) {
+            console.log(error)
+
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Error inesperado")
+            }
+        }
     }
 }

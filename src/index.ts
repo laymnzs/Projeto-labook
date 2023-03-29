@@ -1,30 +1,19 @@
-import { users, posts, likes_dislikes} from "./database/TTabelas";
 import cors from 'cors'
-//import {BaseDatabase} from './database/BaseDataBase'
-import express, { Request, Response } from 'express'
-//import { TUsers, TPosts, TLikes_dislikes } from "./types";
-import { UserController } from "./controller/UserController";
+import express from 'express'
+import dotenv from 'dotenv'
+import { userRouter } from './router/userRouter';
+import { postRouter } from './router/postRouter';
 
-//INVOCAR A FUNÇÃO EXPRESS() DENTRO DA VARIAVEL APP
+dotenv.config()
 
-const app = express();
+const app = express()
 
-app.use(express.json())
 app.use(cors())
+app.use(express.json())
 
-app.listen(3003, () => {
-    console.log("Servidor rodando na porta 3003")
+app.listen(Number(process.env.PORT), () => {
+    console.log(`Servidor rodando na porta ${process.env.port}`)
 })
 
-
-//PEGANDO O EXPRESS E FALANDO ONDE QUER QUE RODE, NO CASO SERÁ NO 3003..
-
-
-
-//ENDPOINT SIGNUP: (criar novo usuario) -- OK
-
-
-const userController = new UserController()
-
-
-app.use("/users/signup", userController.getUsers)
+app.use("/users", userRouter) 
+app.use("/posts", postRouter)
