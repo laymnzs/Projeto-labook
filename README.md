@@ -40,7 +40,7 @@ https://dbdiagram.io/d/63d16443296d97641d7c1ae1
    ```
 
 
-### Tecnologias utilizadas:
+### Tecnologias utilizadas
 
 ![NodeJs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
@@ -49,7 +49,7 @@ https://dbdiagram.io/d/63d16443296d97641d7c1ae1
 
 
 
-### Programas utilizados:
+### Programas utilizados
 - VSCode
 - Postman 
 
