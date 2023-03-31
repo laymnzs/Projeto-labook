@@ -17,7 +17,7 @@ https://dbdiagram.io/d/63d16443296d97641d7c1ae1
 
 2. Clone o repositório
    ```sh
-   git clone https://github.com/laymnzs/projeto-labook
+   git clone https://github.com/laymnzs/projeto-labook.git
    ```
 3. Instale as dependências
    ```sh
